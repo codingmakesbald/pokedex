@@ -1,12 +1,7 @@
 import pygame
 
-from config import POKEMONZ
+from config import *
 
-TILE_WIDTH = 64
-TILE_HEIGHT = 64
-
-WHITE = "white"
-BLACK = "black"
 
 class BaseSprite(pygame.sprite.Sprite):
     __slots__ = ('value')
@@ -22,28 +17,37 @@ class BaseSprite(pygame.sprite.Sprite):
       sprite.blit(self.sheet, (0, 0), (self.value[0]* TILE_WIDTH, self.value[1]* TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT))
       return sprite
 
+SCREEN_WIDTH, SCREEN_HEIGHT = 400, 400  # Assuming these are your screen dimensions
+INFO_WIDTH = 200  # Width of the info subsurface
+
 def draw_pokemon_list(screen, selected_index):
     font = pygame.font.Font(None, 30)
-    
-    # Calculate the start_y position to center the selected Pokémon
-    center_y = 400 // 2
+    center_y = 100 // 2
     pokemon_height = 40  # Assuming each Pokémon's name takes up about 40 pixels in height
     start_y = center_y - selected_index * pokemon_height
+    info_surface = screen.subsurface((SCREEN_WIDTH - INFO_WIDTH, 100, INFO_WIDTH, INFO_WIDTH))
+    info_surface.fill("lightgreen")  # F
     
     for i, pokemon in enumerate(POKEMONZ):
-        titre = font.render("POKEDEX", True, 'black', "white")
-        screen.blit(titre, (0,0))
+        titre = font.render("POKEDEX", True, 'black')
+        titreR = titre.get_rect()
+        titreR.centerx = 200
+        screen.blit(titre, (titreR.x,0))
+
         # Highlight the selected Pokémon
         if i == selected_index:
-            text_surf = font.render(f"No: {i+1}. {pokemon}", True, "BLACK")
-            rectangle = BaseSprite((i%16,i//16)).rect.inflate(10, 10) # Add some padding around the text
-            rectangle.centerx = 400//4
+            sprite = BaseSprite((i%16,i//16)).image
+            # Scale the sprite to be 1.5 times bigger
+            scaled_sprite = pygame.transform.scale(sprite, (int(TILE_WIDTH * 1.5), int(TILE_HEIGHT * 1.5)))
+            text_surf = font.render(f"No:{i+1}  {pokemon}", True, "BLACK")
+            rectangle = scaled_sprite.get_rect()  # Get the rect of the scaled sprite
+            rectangle.centerx = 400 // 4
             rectangle.centery = 200
-            screen.blit(BaseSprite((i%16,i//16)).image, rectangle)
-            pygame.draw.rect(screen, BLACK, rectangle, 1)  # 1 is the border thickness
+            screen.blit(scaled_sprite, rectangle.topleft)  # Blit the scaled sprite
+
         else:
             text_surf = font.render(pokemon, True, "grey")
-        
+
         # Adjust the y position for each Pokémon based on its index
-        text_rect = text_surf.get_rect(center=(400 // 1.2, start_y + i * pokemon_height))
-        screen.blit(text_surf, text_rect)
+        text_rect = text_surf.get_rect(center=(100 // 1.5, start_y + i * pokemon_height))
+        info_surface.blit(text_surf, text_rect)

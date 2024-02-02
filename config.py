@@ -23,3 +23,10 @@ POKEMONZ = (
     "Articuno", "Zapdos", "Moltres", "Dratini", "Dragonair", "Dragonite", "Mewtwo",
     "Mew"
 )
+
+
+TILE_WIDTH = 64
+TILE_HEIGHT = 64
+
+WHITE = "white"
+BLACK = "black"
