@@ -1,5 +1,6 @@
 import pygame, sys
-from sprites import BaseSprite
+from config import POKEMONZ
+from sprites import BaseSprite, draw_pokemon_list
 
 class Game:
     def __init__(self):
@@ -10,16 +11,23 @@ class Game:
         self.playing = True
         # Assuming the first sprite is at position (0, 0) in the sprite sheet
         self.pokemonz = BaseSprite((5, 4))
+        self.current_index = 0
 
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.playing = False
                 self.running = False
+            elif event.type == pygame.KEYDOWN:
+              if event.key == pygame.K_DOWN and self.current_index < len(POKEMONZ) - 1:
+                self.current_index += 1
+              elif event.key == pygame.K_UP and self.current_index > 0:
+                self.current_index -= 1
 
     def draw(self):
-        self.screen.fill((0, 0, 0))  # Clear screen with black
-        self.screen.blit(self.pokemonz.image, self.pokemonz.rect)  # Draw the sprite
+        self.screen.fill('lightblue')  # Clear screen with black
+        # self.screen.blit(self.pokemonz.image, self.pokemonz.rect)  # Draw the sprite
+        draw_pokemon_list(self.screen, self.current_index)
         pygame.display.flip()
         self.clock.tick(60)
 
