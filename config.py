@@ -30,3 +30,11 @@ TILE_HEIGHT = 64
 
 WHITE = "white"
 BLACK = "black"
+
+
+SCREEN_WIDTH, SCREEN_HEIGHT = 400, 400  # Assuming these are your screen dimensions
+
+
+white = '#EFEFEF'
+blue = '#3DAED1'
+red = '#FF6868'

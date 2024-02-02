@@ -1,11 +1,11 @@
 import pygame, sys
-from config import POKEMONZ
+from config import POKEMONZ, SCREEN_HEIGHT, SCREEN_WIDTH
 from sprites import BaseSprite, draw_pokemon_list
 
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((400, 400))
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.running = True
         self.playing = True
@@ -25,7 +25,7 @@ class Game:
                 self.current_index -= 1
 
     def draw(self):
-        self.screen.fill('lightblue')  # Clear screen with black
+        self.screen.fill('#EFEFEF')  # Clear screen with black
         # self.screen.blit(self.pokemonz.image, self.pokemonz.rect)  # Draw the sprite
         draw_pokemon_list(self.screen, self.current_index)
         pygame.display.flip()
