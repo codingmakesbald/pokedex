@@ -22,7 +22,7 @@ INFO_WIDTH = 200  # Width of the info subsurface
 
 def draw_pokemon_list(screen, selected_index):
     font = pygame.font.Font(None, 30)
-    center_y = 100 // 2
+    center_y = 200 // 2
     pokemon_height = 40  # Assuming each Pokémon's name takes up about 40 pixels in height
     start_y = center_y - selected_index * pokemon_height
     info_surface = screen.subsurface((SCREEN_WIDTH - INFO_WIDTH, 100, INFO_WIDTH, INFO_WIDTH))
@@ -49,5 +49,5 @@ def draw_pokemon_list(screen, selected_index):
             text_surf = font.render(pokemon, True, "grey")
 
         # Adjust the y position for each Pokémon based on its index
-        text_rect = text_surf.get_rect(center=(100 // 1.5, start_y + i * pokemon_height))
+        text_rect = text_surf.get_rect(center=(200 // 2, start_y + i * pokemon_height))
         info_surface.blit(text_surf, text_rect)
